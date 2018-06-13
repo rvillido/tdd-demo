@@ -33,4 +33,21 @@ public class SignatureTest {
       .body(equalTo(readFileBody("valid-signature-response.json")))
       .log().everything();
   }
+
+  @Test
+  public void createSignature_whenUserNotFound_shouldReturnErrorCode() {
+    given()
+      .port(port)
+      .contentType(ContentType.JSON)
+      .body(readFileBody("invalid-user-signature-request.json"))
+      .log().everything()
+    .when()
+      .post("/signature/create")
+    .then()
+      .statusCode(400)
+      .contentType(ContentType.JSON)
+      .body(equalTo(readFileBody("invalid-user-signature-response.json")))
+      .log().everything();
+
+  }
 }
