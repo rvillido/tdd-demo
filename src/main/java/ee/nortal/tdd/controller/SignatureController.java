@@ -17,8 +17,8 @@ public class SignatureController {
   private SignatureCreator signatureCreator;
 
   @RequestMapping(name = "create", method = {RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
-  public MobileSignature createSignature() {
-    return signatureCreator.createSignature(new SignatureRequest());
+  public MobileSignature createSignature(@RequestBody SignatureRequest request) {
+    return signatureCreator.createSignature(request);
   }
 
   @ExceptionHandler(UserNotFoundException.class)

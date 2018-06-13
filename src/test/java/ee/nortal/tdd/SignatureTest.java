@@ -4,9 +4,15 @@ import io.restassured.http.ContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.sql.DataSource;
+
+import static ee.nortal.tdd.TestDatabase.addUser;
 import static ee.nortal.tdd.TestUtils.readFileBody;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -15,11 +21,22 @@ import static org.hamcrest.Matchers.equalTo;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class SignatureTest {
 
+  @TestConfiguration
+  static class Config {
+
+    @Bean
+    @Primary
+    public DataSource dataSource() {
+      return TestDatabase.setUp();
+    }
+  }
+
   @LocalServerPort
   int port;
 
   @Test
   public void createSignature() {
+    addUser("John Matrix", "301020304050601");
     given()
       .port(port)
       .contentType(ContentType.JSON)
