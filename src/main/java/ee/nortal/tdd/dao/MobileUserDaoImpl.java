@@ -8,8 +8,6 @@ public class MobileUserDaoImpl implements MobileUserDao {
 
   @Override
   public MobileUser findUser(String personIdCode) throws UserNotFoundException {
-    MobileUser user = new MobileUser();
-    user.setFullName("John Matrix");
-    return user;
+    throw new UserNotFoundException();
   }
 }
