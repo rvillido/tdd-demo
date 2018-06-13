@@ -25,6 +25,7 @@ public class MobileUserDaoTest {
     dataSource = buildTestDatabase();
     userInsert = new SimpleJdbcInsert(dataSource).withTableName("MOBILE_USER");
     generateTestData();
+    mobileUserDao.setDataSource(dataSource);
   }
 
   @After
