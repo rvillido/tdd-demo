@@ -1,5 +1,8 @@
 package ee.nortal.tdd.signature;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class SignatureCreator {
 
   public MobileSignature createSignature() {

@@ -30,7 +30,8 @@ public class SignatureTest {
     .then()
       .statusCode(200)
       .contentType(ContentType.JSON)
-      .body(equalTo(readFileBody("valid-signature-response.json")))
+      .body("userFullName", equalTo("John Matrix"))
+      .body("signature", equalTo("48656C6C6F20576F726C64"))
       .log().everything();
   }
 
@@ -46,7 +47,7 @@ public class SignatureTest {
     .then()
       .statusCode(400)
       .contentType(ContentType.JSON)
-      .body(equalTo(readFileBody("invalid-user-signature-response.json")))
+      .body("errorCode", equalTo("USER_NOT_FOUND"))
       .log().everything();
 
   }
