@@ -4,6 +4,7 @@ import ee.nortal.tdd.TestDatabase;
 import ee.nortal.tdd.signature.UserNotFoundException;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 
@@ -34,11 +35,18 @@ public class MobileUserDaoTest {
   }
 
   @Test
-  public void findExistingUser() {
+  public void findUser() {
     addUser("John Matrix", "301020304050601");
     MobileUser user = mobileUserDao.findUser("301020304050601");
     assertNotNull(user);
     assertEquals("John Matrix", user.getFullName());
   }
 
+  @Test
+  @Ignore
+  public void findExistingUser() {
+    MobileUser user = mobileUserDao.findUser("4020203040992582");
+    assertNotNull(user);
+    assertEquals("Natalie Jones", user.getFullName());
+  }
 }

@@ -2,6 +2,7 @@ package ee.nortal.tdd.signature;
 
 import ee.nortal.tdd.dao.MobileUser;
 import ee.nortal.tdd.dao.MobileUserDao;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -24,14 +25,34 @@ public class SignatureCreatorTest {
   @Test
   public void createSignature() {
     mockUser("John Matrix", "301020304050601");
-    MobileSignature signature = createSignature("301020304050601", "SGVsbG8gV29ybGQ=");
-    assertValidMobileSignature(signature, "John Matrix", "48656C6C6F20576F726C64");
+    MobileSignature signature = createSignature("301020304050601", "Hello World Document!");
+    assertValidMobileSignature(signature, "John Matrix", "SGVsbG8gV29ybGQgRG9jdW1lbnQh");
   }
 
   @Test(expected = UserNotFoundException.class)
   public void createSignature_userNotFound_shouldThrowException() {
     mockUserNotFound("301020304050732");
     createSignature("301020304050732", "SGVsbG8gV29ybGQ=");
+  }
+
+  @Test(expected = InvalidDocumentException.class)
+  @Ignore
+  public void createSignature_withoutDocument_shouldThrowException() {
+    mockUser("John Matrix", "301020304050601");
+    createSignature("301020304050601", null);
+  }
+
+  @Test(expected = InvalidDocumentException.class)
+  @Ignore
+  public void createSignature_withEmptyDocument_shouldThrowException() {
+    mockUser("John Matrix", "301020304050601");
+    createSignature("301020304050601", "");
+  }
+
+  @Test(expected = UserNotFoundException.class)
+  @Ignore
+  public void createSignature_withoutUser_shouldThrowException() {
+    createSignature(null, "Hello world");
   }
 
   private MobileSignature createSignature(String personIdCode, String document) {

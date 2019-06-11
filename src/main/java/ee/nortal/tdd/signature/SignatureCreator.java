@@ -5,6 +5,7 @@ import ee.nortal.tdd.dao.MobileUserDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Base64;
 
 @Service
 public class SignatureCreator {
@@ -12,11 +13,16 @@ public class SignatureCreator {
   @Resource
   private MobileUserDao mobileUserDao;
 
-  public MobileSignature createSignature(SignatureRequest signatureRequest) throws UserNotFoundException {
-    MobileUser user = mobileUserDao.findUser(signatureRequest.getPersonIdCode());
+  public MobileSignature createSignature(SignatureRequest request) throws UserNotFoundException {
+    MobileUser user = mobileUserDao.findUser(request.getPersonIdCode());
     MobileSignature signature = new MobileSignature();
     signature.setUserFullName(user.getFullName());
-    signature.setSignature("48656C6C6F20576F726C64");
+    signature.setSignature(generateSignature(request));
     return signature;
+  }
+
+  private String generateSignature(SignatureRequest request) {
+    String document = request.getDocument();
+    return Base64.getEncoder().encodeToString(document.getBytes());
   }
 }

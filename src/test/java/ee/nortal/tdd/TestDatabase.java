@@ -41,11 +41,11 @@ public class TestDatabase {
   }
 
   private static void generateTestData() {
-    addUser("Natalie Jones ", "4020203040992582");
+    addUser("Natalie Jones", "4020203040992582");
     addUser("Ben Richards", "301020304023592");
-    addUser("Mikaela Banes ", "423020304023592");
+    addUser("Mikaela Banes", "423020304023592");
     addUser("Julius Benedict", "301020304012053");
-    addUser("Jack Slater ", "3010203040954124");
+    addUser("Jack Slater", "3010203040954124");
     addUser("Harry Tasker", "3010203040992582");
   }
 }

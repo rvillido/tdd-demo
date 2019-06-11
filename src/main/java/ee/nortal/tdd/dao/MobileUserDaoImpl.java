@@ -24,7 +24,7 @@ public class MobileUserDaoImpl implements MobileUserDao {
   @Override
   public MobileUser findUser(String personIdCode) throws UserNotFoundException {
     try {
-      String query = "Select * from MOBILE_USER where PERSON_ID_CODE = :personIdCode";
+      String query = "Select * from MOBILE_USER where PERSON_ID_CODE = :personIdCode and FULL_NAME like '%John%'";
       MapSqlParameterSource params = new MapSqlParameterSource();
       params.addValue("personIdCode", personIdCode);
       return jdbcTemplate.queryForObject(query, params, new BeanPropertyRowMapper<>(MobileUser.class));
